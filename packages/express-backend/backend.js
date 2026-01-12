@@ -42,8 +42,20 @@ app.get("/", (req, res) => {
 });
 
 const findUserByName = (name) => {
-    return users["users_list"].filter(
+    return users["users_list"].find(
         (user) => user["name"] === name
+    );
+};
+
+const findUserById = (id) => {
+    return users["users_list"].find(
+        (user) => user["id"] === id
+    );
+};
+
+const findUserByJob = (job) => {
+    return users["users_list"].find(
+        (user) => user["job"] === job
     );
 };
 
@@ -58,15 +70,31 @@ app.get("/users", (req, res) => {
     }
 });
 
-const findUserById = (id) => {
-    return users["users_list"].find(
-        (user) => user["id"] === id
-    );
-};
-
-app.get("/users/:id", (req, res) => {
+app.get("/users/id/:id", (req, res) => {
     const id = req.params["id"]; // or req.params.id
     let result = findUserById(id);
+    if (result === undefined) {
+        res.status(404).send("Resource not found");
+    }
+    else {
+        res.send(result);
+    }
+});
+
+app.get("/users/name/:name", (req, res) => {
+    const name = req.params["name"]; // or req.params.name
+    let result = findUserByName(name);
+    if (result === undefined) {
+        res.status(404).send("Resource not found");
+    }
+    else {
+        res.send(result);
+    }
+});
+
+app.get("/users/job/:job", (req, res) => {
+    const job = req.params.job; // or req.params["job"]
+    let result = findUserByJob(job);
     if (result === undefined) {
         res.status(404).send("Resource not found");
     }
@@ -84,6 +112,21 @@ app.post("/users", (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd)
     res.send();
+});
+
+app.delete("/users/:id", (req, res) => {
+    const id = req.params.id;
+    const result = findUserById(id);
+    if (result === undefined) {
+        res.status(404).send("Resource not found");
+    } 
+    else {
+        // remove user by creating new list without that user
+        users["users_list"] = users["users_list"].filter(
+            (user) => user["id"] !== id
+        );
+        res.send();
+    }
 });
 
 app.listen(port, () => {
