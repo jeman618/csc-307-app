@@ -119,7 +119,9 @@
     "zod": "^4.3.5",
     "zod-validation-error": "^4.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jeman618/csc-307-app.git"
