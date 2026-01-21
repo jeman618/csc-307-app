@@ -8,9 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "workspaces": [
-    "packages/*"
-  ],
   "dependencies": {
     "acorn": "^8.15.0",
     "acorn-jsx": "^5.3.2",
@@ -121,6 +118,7 @@
     "zod-validation-error": "^4.0.2"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "nodemon": "^3.1.11"
   },
   "repository": {
@@ -131,5 +129,8 @@
     "url": "https://github.com/jeman618/csc-307-app/issues"
   },
   "homepage": "https://github.com/jeman618/csc-307-app#readme",
-  "description": ""
+  "description": "",
+  "workspaces": [
+    "packages/*"
+  ]
 }
