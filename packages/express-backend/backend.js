@@ -1,5 +1,4 @@
 // backend.js
-import e from "express";
 import express from "express";
 
 const users = {
@@ -114,7 +113,7 @@ app.post("/users", (req, res) => {
     res.send();
 });
 
-app.delete("/users/:id", (req, res) => {
+app.delete("/users/id/:id", (req, res) => {
     const id = req.params.id;
     const result = findUserById(id);
     if (result === undefined) {
