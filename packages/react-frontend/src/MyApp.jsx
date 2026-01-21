@@ -23,6 +23,13 @@ function MyApp() {
         return promise;
     }
 
+    function deleteUser(id) {
+        const promise = fetch(`http://localhost:8000/users/id/${id}`, {
+            method: "DELETE"
+        });
+        return promise;
+    }
+
     useEffect(() => {
         fetchUsers()
             .then((res) => res.json())
@@ -33,10 +40,16 @@ function MyApp() {
         }, []);
 
     function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
-            return i !== index;
-        });
-        setCharacters(updated);
+        deleteUser(characters[index].id)
+            .then(() => {
+                const updated = characters.filter((character, i) => {
+                return i !== index;
+            });
+            setCharacters(updated);
+            })
+            .catch((error) => {
+                console.log(error);
+            }); 
     }
 
     function updateList(person) {

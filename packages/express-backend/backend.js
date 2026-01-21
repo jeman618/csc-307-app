@@ -105,15 +105,29 @@ app.get("/users/job/:job", (req, res) => {
     }
 });
 
+const newId = () => {
+    const strs = "abcdefghijklmnopqrstuvwxyz";
+    const nums = "0123456789";
+    let id = "";
+    for (let i = 0; i < 6; i++) {
+        if (i < 3)
+            id += strs.charAt(Math.floor(Math.random() * strs.length));
+        else
+            id += nums.charAt(Math.floor(Math.random() * nums.length));
+    }
+    return id;
+}
+
 const addUser = (user) => {
     users["users_list"].push(user);
     return user
 };
 
 app.post("/users", (req, res) => {
-    const userToAdd = req.body;
-    addUser(userToAdd)
-    res.send();
+    const newUser = req.body;
+    newUser["id"] = newId();
+    addUser(newUser);
+    res.status(201).send(newUser); // Content created
 });
 
 app.delete("/users/id/:id", (req, res) => {
@@ -127,7 +141,7 @@ app.delete("/users/id/:id", (req, res) => {
         users["users_list"] = users["users_list"].filter(
             (user) => user["id"] !== id
         );
-        res.send();
+        res.status(204).send(); // Delete successful, no content
     }
 });
 

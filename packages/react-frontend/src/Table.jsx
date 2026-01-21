@@ -6,6 +6,7 @@ function TableHeader() {
         <table>
             <thead>
                 <tr>
+                    <th>id</th>
                     <th>Name</th>
                     <th>Job</th>
                 </tr>
@@ -18,6 +19,7 @@ function TableBody(props) {
     const rows = props.characterData.map((row, index) => {
         return (
             <tr key={index}>
+                <td>{row.id}</td>
                 <td>{row.name}</td>
                 <td>{row.job}</td>
                 <td>
