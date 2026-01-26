@@ -24,7 +24,7 @@ function MyApp() {
     }
 
     function deleteUser(id) {
-        const promise = fetch(`http://localhost:8000/users/id/${id}`, {
+        const promise = fetch(`http://localhost:8000/users/${id}`, {
             method: "DELETE"
         });
         return promise;
@@ -54,7 +54,8 @@ function MyApp() {
 
     function updateList(person) {
         postUser(person)
-            .then(() => setCharacters([...characters, person]))
+            .then((res) => res.json())
+            .then((newUser) => setCharacters([...characters, newUser]))
             .catch((error) => {
                 console.log(error);
             });

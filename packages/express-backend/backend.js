@@ -72,37 +72,23 @@ app.get("/users", (req, res) => {
     }
 });
 
-app.get("/users/id/:id", (req, res) => {
+app.get("/users/:id", (req, res) => {
     const id = req.params["id"]; // or req.params.id
-    let result = findUserById(id);
-    if (result === undefined) {
-        res.status(404).send("Resource not found");
-    }
-    else {
-        res.send(result);
-    }
-});
+    let result = [];
+    result[0] = findUserById(id);
+    result[1] = findUserByName(id);
+    result[2] = findUserByJob(id);
+    console.log(result);
 
-app.get("/users/name/:name", (req, res) => {
-    const name = req.params["name"]; // or req.params.name
-    let result = findUserByName(name);
-    if (result === undefined) {
-        res.status(404).send("Resource not found");
+    // if any of the searches have something, send it
+    // otherwise, send 404
+    for (let i = 0; i < result.length; i++) {
+        if (result[i] !== undefined) {
+            res.send(result[i]);
+            return;
+        }
     }
-    else {
-        res.send(result);
-    }
-});
-
-app.get("/users/job/:job", (req, res) => {
-    const job = req.params.job; // or req.params["job"]
-    let result = findUserByJob(job);
-    if (result === undefined) {
-        res.status(404).send("Resource not found");
-    }
-    else {
-        res.send(result);
-    }
+    res.status(404).send("Resource not found");
 });
 
 const newId = () => {
@@ -130,7 +116,7 @@ app.post("/users", (req, res) => {
     res.status(201).send(newUser); // Content created
 });
 
-app.delete("/users/id/:id", (req, res) => {
+app.delete("/users/:id", (req, res) => {
     const id = req.params.id;
     const result = findUserById(id);
     if (result === undefined) {
