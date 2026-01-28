@@ -29,6 +29,7 @@
     "csstype": "^3.2.3",
     "debug": "^4.4.3",
     "deep-is": "^0.1.4",
+    "dotenv": "^17.2.3",
     "electron-to-chromium": "^1.5.267",
     "esbuild": "^0.27.2",
     "escalade": "^3.2.0",
